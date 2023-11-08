@@ -4,14 +4,14 @@ const Jumbotron = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="lg:grid max-w-screen-xl px-4 py-8 mx-auto gap-0 lg:py-16 lg:grid-cols-12 ">
-        <div className="mr-auto place-self-center lg:col-span-7 bg-blend-multiply bg-no-repeat bg-cover bg-center bg-slate-500 bg-[url('https://images.pexels.com/photos/5490263/pexels-photo-5490263.jpeg')] lg:bg-none ">
-          <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+        <div className="py-20 rounded-xl mr-auto place-self-center lg:col-span-7 bg-blend-multiply bg-no-repeat bg-cover bg-center bg-slate-500 bg-[url('https://images.pexels.com/photos/5490263/pexels-photo-5490263.jpeg')] lg:bg-none ">
+          <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-white lg:text-black">
             La più grande community italiana sui Tattoo
           </h1>
-          <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+          <p className="max-w-2xl mb-6 font-light text-white lg:text-black lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
             Cerca il tuo artista preferito, esplora, commenta, prenota.
           </p>
-          <p className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-black rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+          <p className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white lg:text-black rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
             Diventa CREATOR
             <svg
               className="w-5 h-5 ml-2 -mr-1"
@@ -28,7 +28,7 @@ const Jumbotron = () => {
           </p>
           <a
             href="#"
-            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white lg:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           >
             Completa la registrazione
           </a>
