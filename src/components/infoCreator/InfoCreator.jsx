@@ -3,14 +3,14 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import Nominatim from "nominatim-geocoder";
 
 const InfoCreator = () => {
-  /* const [lat, setLat] = useState(null);
+  const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
 
   const geocoder = new Nominatim();
 
-  const getCoordinate = async () => {
+  const geoGeo = async () => {
     await geocoder
-      .search({ q: "Torino, Italy" })
+      .search({ q: "Via orvieto 19, Torino, Italy" })
       .then((response) => {
         console.log(response);
         setLat(response[0].lat);
@@ -22,24 +22,30 @@ const InfoCreator = () => {
   };
 
   useEffect(() => {
-    getCoordinate();
-  }, []);*/
+    geoGeo();
+  }, []);
 
   return (
-    <div className="mt-8 max-w-xs sm:max-w-sm md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col items-center bg-white border border-gray-200 rounded-xl shadow lg:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="mt-8 max-w-xs sm:max-w-sm md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col bg-white border border-gray-200 rounded-xl shadow lg:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
       <img
         className="object-cover w-full lg:w-1/2 rounded-t-xl h-full lg:rounded-l-xl lg:rounded-r-none"
         src="https://images.pexels.com/photos/2860902/pexels-photo-2860902.jpeg?auto=compress&cs=tinysrgb&w=1280"
         alt=""
       />
-      <div className="flex flex-col w-full h-full lg:w-1/2 justify-between p-4 leading-normal">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Informazioni Artista
-        </h5>
-        <p className="mb-3 text-center font-normal text-gray-700 dark:text-gray-400">
+      <div className="bg-gray-50 flex flex-col w-full lg:w-1/2 justify-between p-4 leading-normal">
+        {/* <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Informazioni Creator
+        </h5> */}
+        <h2 class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-2xl dark:text-white">
+          Informazioni{" "}
+          <mark class="px-2 text-white bg-slate-500 rounded dark:bg-slate-500">
+            artista
+          </mark>
+        </h2>
+        <p className="mb-3 text-center text-4xl font-normal text-slate-700 dark:text-gray-400">
           John Snow
         </p>
-        <div className="m-4 w-full grid grid-cols-3">
+        <div className="m-4 grid grid-cols-3">
           <div className="flex flex-col items-center truncate">
             <p className="mb-3 font-bold text-gray-700 dark:text-gray-400">
               Nazione
@@ -69,8 +75,8 @@ const InfoCreator = () => {
           Indirizzo: Via del campo 12
         </p>
 
-        <div className="h-56">
-          {/*lat && (
+        <div className="h-72">
+          {lat != null && (
             <MapContainer
               className="h-full"
               center={[lat, lon]}
@@ -87,7 +93,7 @@ const InfoCreator = () => {
                 </Popup>
               </Marker>
             </MapContainer>
-          )*/}
+          )}
         </div>
       </div>
     </div>

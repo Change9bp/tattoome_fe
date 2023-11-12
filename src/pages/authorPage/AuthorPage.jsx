@@ -164,9 +164,9 @@ const AuthorPage = () => {
                 />
                 <Select
                   id="selectStyles"
+                  name="tattooStyles"
                   closeMenuOnSelect={false}
                   components={animatedComponents}
-                  //defaultValue={[colourOptions[4], colourOptions[5]]}
                   isMulti
                   options={styles}
                   required

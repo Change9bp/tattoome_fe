@@ -1,9 +1,14 @@
 import React from "react";
-import { Dropdown, Navbar, Avatar } from "flowbite-react";
+import { Dropdown, Navbar, Avatar, Button } from "flowbite-react";
+import { FaPlus } from "react-icons/fa6";
 
 const NavbarDropdown = () => {
   return (
-    <Navbar fluid rounded className="max-w-screen-xl mx-auto">
+    <Navbar
+      fluid
+      rounded
+      className="max-w-screen-xl mx-auto sticky w-full z-20 top-0 left-0"
+    >
       <Navbar.Brand href="https://flowbite-react.com">
         <img
           src="/favicon.svg"
@@ -14,15 +19,21 @@ const NavbarDropdown = () => {
           Tattoome
         </span>
       </Navbar.Brand>
+
       <div className="flex md:order-2">
+        <Button outline pill className="mx-2">
+          Add Post <FaPlus className="ml-2 h-6 w-6" />
+        </Button>
         <Dropdown
           arrowIcon={false}
           inline
           label={
             <Avatar
-              alt="User settings"
-              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              img="/images/people/profile-picture-5.jpg"
               rounded
+              status="online"
+              statusPosition="top-right"
+              size="md"
             />
           }
         >

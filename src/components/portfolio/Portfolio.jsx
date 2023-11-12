@@ -2,7 +2,7 @@ import React from "react";
 
 const Portfolio = () => {
   return (
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="max-w-screen-xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="grid gap-4">
         <div>
           <img
