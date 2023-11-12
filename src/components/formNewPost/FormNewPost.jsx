@@ -28,7 +28,7 @@ const FormNewPost = () => {
       <Formik
         initialValues={{
           title: "",
-          imgPost: "",
+          cover: "",
           content: "",
           tattooStyles: [],
         }}
@@ -39,7 +39,15 @@ const FormNewPost = () => {
           content: Yup.string()
             .min(50, "Il contenuto deve essere di almeno 50 caratteri")
             .required("Required"),
-          imgPost: Yup.mixed().required("L'immagine del Post è richiesta"),
+          cover: Yup.mixed()
+            .required("L'immagine del Post è richiesta")
+            .test("fileFormat", "Invalid file format", (value) => {
+              const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+              // Se passa il required verifica anche il formato del file
+              const fileExtension = value.name.split(".").pop().toLowerCase();
+              return allowedExtensions.includes(fileExtension);
+            }),
           tattooStyles: Yup.array().min(1, "Seleziona almeno uno style"),
         })}
         onSubmit={(values, { setSubmitting }) => {
@@ -91,17 +99,17 @@ const FormNewPost = () => {
             </div>
           </div>
 
-          <div id="imgPost" className="w-full mb-2">
+          <div id="cover" className="w-full mb-2">
             <div className="mb-2 block">
               <Label htmlFor="imgFile" value="Immagine Post" />
             </div>
             <Field
-              name="imgPost"
+              name="cover"
               type="file"
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
             <div className="text-red-500 text-sm mt-1">
-              <ErrorMessage name="imgPost" />
+              <ErrorMessage name="cover" />
             </div>
           </div>
 
