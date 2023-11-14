@@ -1,11 +1,67 @@
-import { Button, Label } from "flowbite-react";
+import { Button, Label, FileInput } from "flowbite-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
 import { styles } from "../../data/tabelleDropdown";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const FormNewPost = () => {
+  // const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+
+  function handleOnChangeFile(e) {
+    setFile(e.target.files[0]);
+  }
+
+  const uploadFileCloudinary = async (cover) => {
+    console.log(cover, "cover del file");
+    const fileData = new FormData();
+    fileData.append("cover", cover);
+
+    console.log("bella caro", cover);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost/cloudUpload`,
+        fileData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.cover;
+    } catch (error) {
+      console.log(error.response, "errore in upload file");
+    }
+  };
+
+  const newPost = async (values) => {
+    console.log(`${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost`);
+    if (values.cover) {
+      try {
+        const uploadCover = await uploadFileCloudinary(values.cover);
+        const finalBody = {
+          ...values,
+          cover: uploadCover,
+        };
+        const response = await axios.post(
+          `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost`,
+          finalBody
+          /*{
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem("loggedInUser")),
+        },
+      }*/
+        );
+        console.log(response);
+      } catch (err) {
+        console.error("errore", err);
+      }
+    }
+  };
+
   return (
     <>
       <div class="my-4 rounded-xl h-72 max-w-screen-xl mx-auto bg-center bg-no-repeat bg-[url('https://images.pexels.com/photos/6593354/pexels-photo-6593354.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-gray-700 bg-blend-multiply flex flex-col justify-center items-center">
@@ -28,9 +84,9 @@ const FormNewPost = () => {
       <Formik
         initialValues={{
           title: "",
-          cover: "",
+          // cover: null,
           content: "",
-          tattooStyles: [],
+          tattooStyle: [],
         }}
         validationSchema={Yup.object({
           title: Yup.string()
@@ -39,19 +95,25 @@ const FormNewPost = () => {
           content: Yup.string()
             .min(50, "Il contenuto deve essere di almeno 50 caratteri")
             .required("Required"),
-          cover: Yup.mixed()
-            .required("L'immagine del Post è richiesta")
-            .test("fileFormat", "Invalid file format", (value) => {
-              const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
-
-              // Se passa il required verifica anche il formato del file
-              const fileExtension = value.name.split(".").pop().toLowerCase();
-              return allowedExtensions.includes(fileExtension);
-            }),
-          tattooStyles: Yup.array().min(1, "Seleziona almeno uno style"),
+          // cover: Yup.mixed()
+          //   .required("L'immagine del Post è richiesta")
+          //   .test("fileFormat", "Invalid file format", (value) => {
+          //     const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+          //     // Se passa il required verifica anche il formato del file
+          //     const fileExtension = value.split(".").pop().toLowerCase();
+          //     return allowedExtensions.includes(fileExtension);
+          //  }),
+          tattooStyle: Yup.array().min(1, "Seleziona almeno uno style"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("valori", values);
+          console.log("valori", values.cover);
+
+          const newValues = {
+            ...values,
+            cover: file,
+          };
+
+          newPost(newValues);
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
@@ -67,20 +129,20 @@ const FormNewPost = () => {
               />
             </div>
             <Field
-              name="tattooStyles"
+              name="tattooStyle"
               component={({ field, form }) => (
                 <Select
                   {...field}
                   options={styles}
                   isMulti
                   onChange={(selectedOptions) =>
-                    form.setFieldValue("tattooStyles", selectedOptions)
+                    form.setFieldValue("tattooStyle", selectedOptions)
                   }
                 />
               )}
             />
             <div className="text-red-500 text-sm mt-1">
-              <ErrorMessage name="tattooStyles" />
+              <ErrorMessage name="tattooStyle" />
             </div>
           </div>
 
@@ -101,12 +163,19 @@ const FormNewPost = () => {
 
           <div id="cover" className="w-full mb-2">
             <div className="mb-2 block">
-              <Label htmlFor="imgFile" value="Immagine Post" />
+              <Label htmlFor="cover" value="Immagine Post" />
             </div>
-            <Field
+            {/* <Field
               name="cover"
               type="file"
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              onChange={handleFileChange}
+            /> */}
+            <FileInput
+              id="file"
+              helperText="A profile picture is useful to confirm your are logged into your account"
+              className="w-full"
+              onChange={handleOnChangeFile}
             />
             <div className="text-red-500 text-sm mt-1">
               <ErrorMessage name="cover" />

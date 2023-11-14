@@ -1,6 +1,7 @@
 import React from "react";
 import { Dropdown, Navbar, Avatar, Button } from "flowbite-react";
 import { FaPlus } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const NavbarDropdown = () => {
   return (
@@ -21,9 +22,12 @@ const NavbarDropdown = () => {
       </Navbar.Brand>
 
       <div className="flex md:order-2">
-        <Button outline pill className="mx-2">
-          Add Post <FaPlus className="ml-2 h-6 w-6" />
-        </Button>
+        <Link to="/newpost">
+          {" "}
+          <Button outline pill className="mx-2">
+            Add Post <FaPlus className="ml-2 h-6 w-6" />
+          </Button>
+        </Link>
         <Dropdown
           arrowIcon={false}
           inline

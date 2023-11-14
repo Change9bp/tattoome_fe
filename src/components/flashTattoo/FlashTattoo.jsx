@@ -1,7 +1,7 @@
 import React from "react";
 
 const FlashTattoo = () => {
-  return <div>DA CAPIRE COME VOGLIO FARLA, PAGINATION? GALLERY SEMPLICE?</div>;
+  return <div>flash tattoooo?</div>;
 };
 
 export default FlashTattoo;
