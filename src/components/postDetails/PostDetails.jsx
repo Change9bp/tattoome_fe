@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 
-const PostDetails = () => {
+const PostDetails = ({ ...singlePost }) => {
+  const { title, content, cover, author } = singlePost;
+
   const [objFit, setObjFit] = useState(null);
   const imgRef = useRef(null);
 
@@ -29,7 +31,7 @@ const PostDetails = () => {
   return (
     <div className="lg:w-4/6 w-3/4 mx-auto">
       <h1 className="text-5xl font-extrabold dark:text-white text-center mb-6">
-        Titolo
+        {title}
         <small className="ml-2 font-semibold text-gray-500 dark:text-gray-400">
           Questo tatuaggio si chiama ciao!
         </small>
@@ -38,7 +40,7 @@ const PostDetails = () => {
         <img
           ref={imgRef}
           className={`w-full h-full ${objFit}`}
-          src="https://images.pexels.com/photos/18978811/pexels-photo-18978811/free-photo-of-occhiali-da-sole.png?auto=compress&cs=tinysrgb&w=1600&lazy=load"
+          src={cover}
           alt="image description"
           onLoad={() => setObjFit(handleImgDimension)}
         />
@@ -46,11 +48,7 @@ const PostDetails = () => {
       <h5 className="text-xl font-bold dark:text-white">Descrizione</h5>
 
       <p className="mb-3 text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left">
-        Track work across the enterprise through an open, collaborative
-        platform. Link issues across Jira and ingest data from other software
-        development tools, so your IT support and operations teams have richer
-        contextual information to rapidly respond to requests, incidents, and
-        changes.
+        {content}
       </p>
       <p className="text-gray-500 dark:text-gray-400">
         Deliver great service experiences fast - without the complexity of

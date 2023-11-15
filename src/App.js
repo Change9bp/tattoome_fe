@@ -6,17 +6,23 @@ import Home from "./pages/home/Home";
 import AuthorPage from "./pages/authorPage/AuthorPage";
 import CreatorPage from "./pages/creatorPage/CreatorPage";
 import NewPost from "./pages/newPost/NewPost";
+import GlobalContext from "./context/getContext";
+import ProtectedRoutes from "./middlewares/ProtectedRoutes";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/authorpage" element={<AuthorPage />} />
-        <Route path="/creatorpage" element={<CreatorPage />} />
-        <Route path="/newpost" element={<NewPost />} />
-      </Routes>
+      <GlobalContext>
+        <Routes>
+          <Route element={<ProtectedRoutes />}>
+            <Route exact path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/authorpage" element={<AuthorPage />} />
+            <Route path="/creatorpage" element={<CreatorPage />} />
+            <Route path="/newpost" element={<NewPost />} />
+          </Route>
+        </Routes>
+      </GlobalContext>
     </BrowserRouter>
   );
 };
