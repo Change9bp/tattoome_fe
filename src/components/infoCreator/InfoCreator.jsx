@@ -11,19 +11,15 @@ const InfoCreator = () => {
     useContext(GlobalProvider);
   const { id } = useParams();
 
-  console.log(
-    `indirizzi ${infoSingleCreator.address},${infoSingleCreator.city},${infoSingleCreator.nation}`
-  );
-
   const geocoder = new Nominatim();
 
   const geoGeo = async () => {
     await geocoder
       .search({
-        q: `${infoSingleCreator.address}, ${infoSingleCreator.city}, Italy`,
+        q: `${infoSingleCreator.address},${infoSingleCreator.city},${infoSingleCreator.nation}`,
       })
       .then((response) => {
-        console.log(response);
+        console.log("response di geocoder", response);
         setLat(response[0].lat);
         setLon(response[0].lon);
       })
@@ -34,16 +30,18 @@ const InfoCreator = () => {
 
   useEffect(() => {
     getInfoSingleCreator(id);
-    geoGeo();
+    infoSingleCreator && geoGeo();
   }, []);
 
   return (
     <div className="mt-8 max-w-xs sm:max-w-sm md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col bg-white border border-gray-200 rounded-xl shadow lg:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+      {infoSingleCreator && console.log(geoGeo())}
       <img
         className="object-cover w-full lg:w-1/2 rounded-t-xl h-full lg:rounded-l-xl lg:rounded-r-none"
         src="https://images.pexels.com/photos/2860902/pexels-photo-2860902.jpeg?auto=compress&cs=tinysrgb&w=1280"
         alt=""
       />
+
       <div className="bg-gray-50 flex flex-col w-full lg:w-1/2 justify-between p-4 leading-normal">
         <h2 class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-2xl dark:text-white">
           Informazioni{" "}
@@ -85,7 +83,7 @@ const InfoCreator = () => {
         </p>
 
         <div className="h-72">
-          {lat != null && (
+          {lat && (
             <MapContainer
               className="h-full"
               center={[lat, lon]}

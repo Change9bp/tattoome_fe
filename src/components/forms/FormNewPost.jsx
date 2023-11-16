@@ -3,10 +3,13 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
 import { styles } from "../../data/tabelleDropdown";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { GlobalProvider } from "../../context/getContext";
 
 const FormNewPost = () => {
+  const { dataUser } = useContext(GlobalProvider);
+
   const uploadFileCloudinary = async (cover) => {
     console.log(cover, "cover del file");
     const fileData = new FormData();
@@ -38,6 +41,7 @@ const FormNewPost = () => {
         const finalBody = {
           ...values,
           cover: uploadCover,
+          author: dataUser.id,
         };
         const response = await axios.post(
           `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost`,

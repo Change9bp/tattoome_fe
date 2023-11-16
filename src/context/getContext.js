@@ -8,6 +8,7 @@ const GlobalContext = ({ children }) => {
   const [tattooPosts, setTattooPosts] = useState([]);
   const [creatorList, setCreatorList] = useState([]);
   const [infoSingleCreator, setInfoSingleCreator] = useState({});
+  const [dataUser, setDataUser] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
 
@@ -141,6 +142,8 @@ const GlobalContext = ({ children }) => {
         setCurrentPage,
         infoSingleCreator,
         setInfoSingleCreator,
+        dataUser,
+        setDataUser,
       }}
     >
       {children}
