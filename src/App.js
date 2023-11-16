@@ -14,11 +14,11 @@ const App = () => {
     <BrowserRouter>
       <GlobalContext>
         <Routes>
+          <Route exact path="/" element={<Login />} />
           <Route element={<ProtectedRoutes />}>
-            <Route exact path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/authorpage" element={<AuthorPage />} />
-            <Route path="/creatorpage" element={<CreatorPage />} />
+            <Route path="/creatorpage/:id" element={<CreatorPage />} />
             <Route path="/newpost" element={<NewPost />} />
           </Route>
         </Routes>

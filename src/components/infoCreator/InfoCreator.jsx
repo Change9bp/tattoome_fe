@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import Nominatim from "nominatim-geocoder";
+import { useParams } from "react-router-dom";
+import { GlobalProvider } from "../../context/getContext";
 
 const InfoCreator = () => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const { getInfoSingleCreator, infoSingleCreator } =
+    useContext(GlobalProvider);
+  const { id } = useParams();
+
+  console.log(
+    `indirizzi ${infoSingleCreator.address},${infoSingleCreator.city},${infoSingleCreator.nation}`
+  );
 
   const geocoder = new Nominatim();
 
   const geoGeo = async () => {
     await geocoder
-      .search({ q: "Via orvieto 19, Torino, Italy" })
+      .search({
+        q: `${infoSingleCreator.address}, ${infoSingleCreator.city}, Italy`,
+      })
       .then((response) => {
         console.log(response);
         setLat(response[0].lat);
@@ -22,6 +33,7 @@ const InfoCreator = () => {
   };
 
   useEffect(() => {
+    getInfoSingleCreator(id);
     geoGeo();
   }, []);
 
@@ -33,9 +45,6 @@ const InfoCreator = () => {
         alt=""
       />
       <div className="bg-gray-50 flex flex-col w-full lg:w-1/2 justify-between p-4 leading-normal">
-        {/* <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Informazioni Creator
-        </h5> */}
         <h2 class="mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-2xl dark:text-white">
           Informazioni{" "}
           <mark class="px-2 text-white bg-slate-500 rounded dark:bg-slate-500">

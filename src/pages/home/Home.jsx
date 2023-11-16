@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import NavbarDropdown from "../../components/navbar/NavbarDropdown";
 import Jumbotron from "../../components/jumbotron/Jumbotron";
 import LastAdded from "../../components/lastAdded/LastAdded";
 import LastRegistered from "../../components/lastRegistered/LastRegistered";
 import DropDownBar from "../../components/dropDownBar/DropDownBar";
 import SearchSection from "../../components/searcSection/SearchSection";
+import { GlobalProvider } from "../../context/getContext";
 
 const Home = () => {
+  const { getCreatorList, creatorList } = useContext(GlobalProvider);
+
+  useEffect(() => {
+    getCreatorList();
+  }, []);
+
   return (
     <>
       <NavbarDropdown />
@@ -25,7 +32,7 @@ const Home = () => {
       <h2 className="max-w-screen-xl mx-auto px-4 text-4xl font-extrabold">
         Ultimi creator registrati alla community
       </h2>
-      <LastRegistered />
+      <LastRegistered creatorList={creatorList} />
     </>
   );
 };

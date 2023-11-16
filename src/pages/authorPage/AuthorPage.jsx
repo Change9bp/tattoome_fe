@@ -4,10 +4,10 @@ import { Rating, Label, FileInput, Button, TextInput } from "flowbite-react";
 import { VscEdit } from "react-icons/vsc";
 import { GrGrow } from "react-icons/gr";
 import { MdDeleteForever } from "react-icons/md";
-import { FaLevelUpAlt } from "react-icons/fa";
-import { styles } from "../../data/tabelleDropdown";
-import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import FormUserProfile from "../../components/forms/FormUserProfile";
+import JumboCreator from "../../components/jumbotron/JumboCreator";
+import FormBecomeCreator from "../../components/forms/FormBecomeCreator";
 
 const animatedComponents = makeAnimated();
 
@@ -87,109 +87,14 @@ const AuthorPage = () => {
             </div>
           </div>
         </div>
-        {!modify ? null : (
-          <form>
-            <div id="fileUpload" className="w-full mb-2">
-              <div className="mb-2 block">
-                <Label htmlFor="file" value="Upload avatar image" />
-              </div>
-              <FileInput
-                id="file"
-                helperText="A profile picture is useful to confirm your are logged into your account"
-                className="w-full"
-              />
-            </div>
-
-            <Button
-              onClick={() => setChangePsw(!changePsw)}
-              className="m-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Cambia Password
-            </Button>
-
-            {changePsw ? (
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="password1" value="Your current password" />
-                </div>
-                <TextInput id="password1" type="password" required />
-
-                <div className="mb-2 block">
-                  <Label htmlFor="password2" value="Your new password" />
-                </div>
-                <TextInput id="password2" type="password" required />
-
-                <div className="mb-2 block">
-                  <Label htmlFor="password3" value="Repeat password" />
-                </div>
-                <TextInput id="password3" type="password" required />
-              </div>
-            ) : null}
-
-            <Button
-              type="submit"
-              className="m-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Save information
-            </Button>
-          </form>
-        )}
+        {!modify ? null : <FormUserProfile />}
         {!creator ? null : (
           <div>
-            <section class="rounded-lg h-96 bg-center bg-cover bg-no-repeat bg-[url('https://images.pexels.com/photos/3727658/pexels-photo-3727658.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-gray-700 bg-blend-multiply">
-              <div class="w-full h-full text-center flex flex-col justify-center items-center">
-                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                  Diventa
-                  <span className="ml-3 text-blue-600 dark:text-blue-500">
-                    Creator
-                  </span>{" "}
-                  !
-                </h1>
-                <p class="text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
-                  Registrati e condividi con la più grande community italiana di
-                  appassionati di tatuaggi i tuoi lavori, permetti agli altri di
-                  scoprirti ed apprezzare le tue capacità.
-                </p>
-              </div>
-            </section>
-            <h2 className="text-2xl font-bold text-gray-800 text-center">
+            <JumboCreator />
+            <h2 className="my-6 text-2xl font-bold text-gray-800 text-center">
               Completa la registrazione per diventare CREATOR
             </h2>
-            <form action="">
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="selectStyles"
-                  value="Select your Tattoo Style"
-                  className="mb-2"
-                />
-                <Select
-                  id="selectStyles"
-                  name="tattooStyles"
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={styles}
-                  required
-                />
-                <div className="mb-2 block">
-                  <Label htmlFor="nazione" value="Your Nation" />
-                </div>
-                <TextInput id="nazione" type="text" required />
-
-                <div className="mb-2 block">
-                  <Label htmlFor="region" value="Your Region" />
-                </div>
-                <TextInput id="region" type="text" required />
-
-                <div className="mb-2 block">
-                  <Label htmlFor="city" value="Your City" />
-                </div>
-                <TextInput id="city" type="text" required />
-              </div>
-              <Button className="m-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <FaLevelUpAlt /> Diventa Creator
-              </Button>
-            </form>
+            <FormBecomeCreator />{" "}
           </div>
         )}
       </main>

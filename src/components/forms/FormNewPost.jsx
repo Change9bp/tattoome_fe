@@ -115,7 +115,7 @@ const FormNewPost = () => {
             <div id="selectStyles" className="w-full mb-2">
               <div className="mb-2 block">
                 <Label
-                  htmlFor="selecStyles"
+                  htmlFor="tattooStyle"
                   value="Seleziona lo stile del Tattoo"
                 />
               </div>

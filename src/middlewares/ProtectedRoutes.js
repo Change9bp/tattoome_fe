@@ -9,34 +9,28 @@ export const isAuth = () => {
 
 const ProtectedRoutes = () => {
   const auth = isAuth();
-  //nuovo codice
-  const decoded = auth ? jwtDecode(auth) : null;
 
-  console.log("vediamo se vedo i dati del token decriptato", decoded);
+  if (!auth) {
+    // Se l'utente non è autenticato, puoi gestire qui il reindirizzamento o fare altre azioni
+    console.log("Utente non autenticato. Reindirizzamento o altre azioni...");
+    return <Login />;
+  }
+
+  // Decodifica il token se esiste
+  const decoded = jwtDecode(auth);
+
+  console.log("Dati del token decriptato:", decoded);
+
+  // Salva i dati decodificati nel localStorage con la chiave "userDataDetails"
   localStorage.setItem("userDataDetails", JSON.stringify(decoded));
+
+  // Ottieni i dati dell'utente dal localStorage
   const dataUser = JSON.parse(localStorage.getItem("userDataDetails"));
 
-  console.log("id dal localstorage?", dataUser.id);
+  console.log("ID dal localStorage?", dataUser.id);
 
-  /* const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!auth) {
-      navigate("/login");
-    }
-  },[navigate, auth]);
-
-  return decoded
-  
-  const Protected = () => {
-    const auth = isAuth()
-    return auth ? <Outlet /> : <Login />
-  }*/
-
-  //la chiamata la faccio nel middleware, passo il token al backend mi faccio ritornare un booleano e poi gestisco l'outlet ed il login
-  //oppure lo decodifico, passo la mail alla rotta del backend e cerco l'utente nel modello
-
-  return auth ? <Outlet /> : <Login />;
-}; //outlet sta a significare qualsiasi componente figlio del wrap “protectedRoutes” presente in app.js
+  // Restituisci i componenti figlio tramite Outlet
+  return <Outlet />;
+};
 
 export default ProtectedRoutes;

@@ -15,14 +15,6 @@ const CreatorPage = () => {
     <>
       <NavbarDropdown />
       <InfoCreator />
-      {/*<div className="max-w-screen-xl mx-auto px-4 my-8 grid grid-cols-3">
-        <Button pill>Portfolio</Button>
-        <Button pill>Flash tattoo</Button>
-        <Button pill>Booking</Button>
-           ??? prova----     <Button pill outline color="blue">
-          Purple to Blue
-        </Button>
-  </div>*/}
       <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
         <button
           onClick={() => {
