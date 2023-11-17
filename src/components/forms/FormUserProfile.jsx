@@ -5,14 +5,10 @@ import * as Yup from "yup";
 import { GlobalProvider } from "../../context/getContext";
 import axios from "axios";
 
-// DEVI OTTENERE L'ID USER DA PASSARE ALLA ROTTA
-//DEVI GESTIRE DINAMICAMENTE GLI INDIRIZZI DA MANDARE ALLA ROTTA CLOUDINARY NEL CONTEXT
-
 const FormUserProfile = () => {
-  const { uploadFileCloudinary } = useContext(GlobalProvider);
+  const { uploadFileCloudinary, dataUser } = useContext(GlobalProvider);
 
   const userCreatorUpdate = async (values) => {
-    console.log("bella zio", values.avatar);
     let finalBody = {};
 
     try {
@@ -24,10 +20,7 @@ const FormUserProfile = () => {
             "userCreator",
             values.avatar
           );
-          console.log("valore url?", uploadImg);
         }
-
-        console.log("valore url?", uploadFileCloudinary);
         if (values.password && values.avatar) {
           finalBody = {
             password: values.password,
@@ -44,7 +37,7 @@ const FormUserProfile = () => {
         }
       }
       const response = await axios.patch(
-        `${process.env.REACT_APP_SERVER_BASE_URL}/userCreator/6553fe91129bd55576a51e1d`,
+        `${process.env.REACT_APP_SERVER_BASE_URL}/userCreator/${dataUser.id}`,
         finalBody
         // {
         //   headers: {

@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import Nominatim from "nominatim-geocoder";
-import { useParams } from "react-router-dom";
 import { GlobalProvider } from "../../context/getContext";
 
-const InfoCreator = () => {
+const InfoCreator = ({ id }) => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   const { getInfoSingleCreator, infoSingleCreator } =
     useContext(GlobalProvider);
-  const { id } = useParams();
 
   const geocoder = new Nominatim();
 
@@ -30,12 +28,14 @@ const InfoCreator = () => {
 
   useEffect(() => {
     getInfoSingleCreator(id);
-    infoSingleCreator && geoGeo();
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    geoGeo();
+  }, [infoSingleCreator]);
 
   return (
     <div className="mt-8 max-w-xs sm:max-w-sm md:max-w-screen-sm lg:max-w-screen-lg mx-auto flex flex-col bg-white border border-gray-200 rounded-xl shadow lg:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-      {infoSingleCreator && console.log(geoGeo())}
       <img
         className="object-cover w-full lg:w-1/2 rounded-t-xl h-full lg:rounded-l-xl lg:rounded-r-none"
         src="https://images.pexels.com/photos/2860902/pexels-photo-2860902.jpeg?auto=compress&cs=tinysrgb&w=1280"

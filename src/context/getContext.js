@@ -6,6 +6,7 @@ export const GlobalProvider = createContext();
 
 const GlobalContext = ({ children }) => {
   const [tattooPosts, setTattooPosts] = useState([]);
+  const [tattooPostsForCreator, setTattooPostsForCreator] = useState([]);
   const [creatorList, setCreatorList] = useState([]);
   const [infoSingleCreator, setInfoSingleCreator] = useState({});
   const [dataUser, setDataUser] = useState(null);
@@ -16,12 +17,8 @@ const GlobalContext = ({ children }) => {
 
   //CHIAMATA PER LA GESTIONE DI CLOUDINARY
   const uploadFileCloudinary = async (key, endpoint, objFile) => {
-    console.log(objFile, "avatar del file");
     const fileData = new FormData();
     fileData.append(key, objFile);
-
-    console.log("bella caro", objFile);
-
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/${endpoint}/cloudUpload`,
@@ -50,7 +47,7 @@ const GlobalContext = ({ children }) => {
     }
   };
 
-  //CHIAMATA GET BY ID
+  //CHIAMATA USER GET BY ID
 
   const getInfoSingleCreator = async (id) => {
     try {
@@ -62,6 +59,8 @@ const GlobalContext = ({ children }) => {
     }*/
       );
       console.log(response.data.userCreator, "single creator");
+      // setInfoSingleCreator(response.data.userCreator);
+      // return response.data.userCreator;
       setInfoSingleCreator(response.data.userCreator);
     } catch (error) {
       console.log(error.response);
@@ -86,6 +85,50 @@ const GlobalContext = ({ children }) => {
     }
   };
 
+  // CHIAMATA GET PER I POST DI UN SOLO CREATOR
+  const getTattooPostsForCreator = async (id) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost/${id}/creator`
+        /*, {
+          headers: {
+            Authorization: JSON.parse(localStorage.getItem("loggedInUser")),
+          },
+        }*/
+      );
+
+      setTattooPostsForCreator(response.data.findPost);
+      console.log(
+        "la response della chiamata dei post per creator",
+        response.data
+      );
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  //CHIAMATA DELETE DEI TATTOPOST
+  const delPost = async (postId) => {
+    const confirmDel = window.confirm(
+      "Sei sicuro di voler cancellare il post?"
+    );
+    if (confirmDel) {
+      try {
+        const response = await axios.delete(
+          `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost/${postId}`
+          // {
+          //   headers: {
+          //     Authorization: JSON.parse(localStorage.getItem("loggedInUser")),
+          //   },
+          // }
+        );
+        console.log(response);
+        //   navigate("/home");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   //CHIAMATA POST PER REGISTRAZIONE USER
 
   const registerUser = async (values) => {
@@ -136,6 +179,8 @@ const GlobalContext = ({ children }) => {
         uploadFileCloudinary,
         getCreatorList,
         getInfoSingleCreator,
+        getTattooPostsForCreator,
+        delPost,
         creatorList,
         tattooPosts,
         currentPage,
@@ -144,6 +189,7 @@ const GlobalContext = ({ children }) => {
         setInfoSingleCreator,
         dataUser,
         setDataUser,
+        setTattooPostsForCreator,
       }}
     >
       {children}

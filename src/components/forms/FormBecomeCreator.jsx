@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Label } from "flowbite-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import Select from "react-select";
@@ -8,10 +8,12 @@ import { styles, nation, region, city } from "../../data/tabelleDropdown";
 import axios from "axios";
 
 const FormBecomeCreator = () => {
+  const { dataUser } = useContext(GlobalProvider);
+
   const creatorUpdate = async (finalBody) => {
     try {
       const response = await axios.patch(
-        `${process.env.REACT_APP_SERVER_BASE_URL}/userCreator/6553fe91129bd55576a51e1d`,
+        `${process.env.REACT_APP_SERVER_BASE_URL}/userCreator/${dataUser.id}`,
         finalBody
         // {
         //   headers: {

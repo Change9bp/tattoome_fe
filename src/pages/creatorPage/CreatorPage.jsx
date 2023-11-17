@@ -5,16 +5,18 @@ import { Button } from "flowbite-react";
 import Portfolio from "../../components/portfolio/Portfolio";
 import FlashTattoo from "../../components/flashTattoo/FlashTattoo";
 import Calendar from "../../components/calendar/Calendar";
+import { useParams } from "react-router-dom";
 
 const CreatorPage = () => {
   const [portfolio, setPortfolio] = useState(false);
   const [flash, setFlash] = useState(false);
   const [booking, setBooking] = useState(false);
+  const { id } = useParams();
 
   return (
     <>
       <NavbarDropdown />
-      <InfoCreator />
+      <InfoCreator id={id} />
       <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
         <button
           onClick={() => {
@@ -50,7 +52,7 @@ const CreatorPage = () => {
           Booking
         </button>
       </div>
-      {portfolio ? <Portfolio /> : null}
+      {portfolio ? <Portfolio id={id} /> : null}
       {flash ? <FlashTattoo /> : null}
       {booking ? <Calendar /> : null}
     </>

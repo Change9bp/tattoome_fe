@@ -30,7 +30,7 @@ const CardBlog = ({ ...singlePost }) => {
         popup
       >
         <Modal.Header />
-        <NavbarModal />
+        <NavbarModal {...singlePost} />
         <Modal.Body>
           <PostDetails {...singlePost} />
         </Modal.Body>

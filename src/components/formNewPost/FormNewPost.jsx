@@ -3,25 +3,41 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Select from "react-select";
 import { styles } from "../../data/tabelleDropdown";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { GlobalProvider } from "../../context/getContext";
 
 const FormNewPost = () => {
-  const { dataUser, uploadFileCloudinary } = useContext(GlobalProvider);
+  const uploadFileCloudinary = async (cover) => {
+    console.log(cover, "cover del file");
+    const fileData = new FormData();
+    fileData.append("cover", cover);
+
+    console.log("bella caro", cover);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost/cloudUpload`,
+        fileData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
+      );
+      return response.data.cover;
+    } catch (error) {
+      console.log(error.response, "errore in upload file");
+    }
+  };
 
   const newPost = async (values) => {
+    console.log(`${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost`);
     if (values.cover) {
       try {
-        const uploadCover = await uploadFileCloudinary(
-          "cover",
-          "tattooPost",
-          values.cover
-        );
+        const uploadCover = await uploadFileCloudinary(values.cover);
         const finalBody = {
           ...values,
           cover: uploadCover,
-          author: dataUser.id,
         };
         const response = await axios.post(
           `${process.env.REACT_APP_SERVER_BASE_URL}/tattooPost`,
@@ -88,6 +104,10 @@ const FormNewPost = () => {
         onSubmit={(values, { setSubmitting }) => {
           console.log("valori", values.cover);
           newPost(values);
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
         }}
       >
         {({ setFieldValue }) => (
@@ -95,7 +115,7 @@ const FormNewPost = () => {
             <div id="selectStyles" className="w-full mb-2">
               <div className="mb-2 block">
                 <Label
-                  htmlFor="tattooStyle"
+                  htmlFor="selecStyles"
                   value="Seleziona lo stile del Tattoo"
                 />
               </div>

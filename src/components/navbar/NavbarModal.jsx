@@ -1,32 +1,33 @@
 import React from "react";
 import { Button, Navbar, Avatar } from "flowbite-react";
-import { HiAdjustments, HiCloudDownload, HiUserCircle } from "react-icons/hi";
+import { FaBookmark, FaHeart } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const NavbarModal = () => {
+const NavbarModal = ({ author }) => {
   return (
-    <Navbar fluid rounded>
-      <Avatar img="/images/people/profile-picture-5.jpg" rounded size="lg">
-        <div className="space-y-1 font-medium dark:text-white">
-          <div>Jese Leos</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            Joined in August 2014
+    <Navbar fluid rounded className="sm:px-9">
+      <Link to={`/creatorPage/${author._id}`}>
+        <Avatar img={author.avatar} rounded size="lg">
+          <div className="space-y-1 font-medium dark:text-white">
+            <div>
+              {author.name} {author.lastName}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Creator
+            </div>
           </div>
-        </div>
-      </Avatar>
+        </Avatar>
+      </Link>
 
       <div className="flex md:order-2">
-        <Button.Group outline>
-          <Button gradientMonochrome="info">
-            <HiUserCircle className="mr-3 h-4 w-4" />
-            Profile
+        <Button.Group>
+          <Button color="grey">
+            <FaHeart className="fill-red-500 mr-3 h-4 w-4" />
+            Mi piace
           </Button>
-          <Button gradientMonochrome="info">
-            <HiAdjustments className="mr-3 h-4 w-4" />
-            Settings
-          </Button>
-          <Button gradientMonochrome="info">
-            <HiCloudDownload className="mr-3 h-4 w-4" />
-            Messages
+          <Button color="grey">
+            <FaBookmark className="fill-red-500 mr-3 h-4 w-4" />
+            Preferiti
           </Button>
         </Button.Group>
         <Navbar.Toggle />
